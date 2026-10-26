@@ -23,6 +23,15 @@ double find_root(double a, double b, double eps) {
     return (a + b) / 2;
 }
 
+void twenty_zn(double a, double h) {
+    double x;
+    printf("Значение x  Значение f(x)\n");
+    for (int i = 0; i < 20; i++) {
+        x = a + i * h;
+        printf("| %10.4f | %16.6f |\n", x, f(x));
+    }
+}
+
 double input_eps() {
     double eps;
     while (scanf("%lf", &eps) == 0 || eps <= 0) {
@@ -41,11 +50,13 @@ int main(void) {
     printf("Введите точность: ");
     eps = input_eps();
 
-
     if (f(a) * f(b) >= 0) {
         printf("На заданном отрезке нет гарантированного корня\n");
         return 1;
     }
+    double h = (b - a) / 19.0;
+
+    twenty_zn(a, h);
 
     root = find_root(a, b, eps);
 
