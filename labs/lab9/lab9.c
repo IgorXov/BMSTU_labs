@@ -1,7 +1,6 @@
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 #include <time.h>
 
 typedef struct {
@@ -68,7 +67,7 @@ void the_best_team(Matrix mat) {
         }
     }
     printf("Максимальное число очков равно: %d\n", max);
-    printf("Команды, набравшие макчсимальное количесто очков: ");
+    printf("Команды, набравшие максимальное количество очков: ");
     for (int i = 0; i < 8; i++) {
         if (scores.array[i] == max) {
             printf("k%d ", i + 1);
@@ -77,7 +76,6 @@ void the_best_team(Matrix mat) {
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
     srand((unsigned int)time(NULL));
 
     Matrix mat = make_matrix();
