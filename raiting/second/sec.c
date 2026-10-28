@@ -1,7 +1,6 @@
 #include <stdio.h>
 
-void generate_matrix() {
-    int matrix[10][10];
+void generate_matrix(int matrix[10][10]) {
     int top = 0, bottom = 9;
     int left = 0, right = 9;
     int n = 1;
@@ -38,6 +37,10 @@ void generate_matrix() {
             left++;
         }
     }
+}
+
+void print_matrix(int matrix[10][10]) {
+
     for (int i = 0; i < 10; i++) {
         int s = 0;
         for (int j = 0; j < 10; j++) {
@@ -49,5 +52,9 @@ void generate_matrix() {
 }
 
 int main() {
-    generate_matrix();
+    int matrix[10][10];
+    generate_matrix(matrix);
+    print_matrix(matrix);
+
+    return 0;
 }
