@@ -9,6 +9,7 @@ typedef struct {
 
 typedef struct {
     int array[8];
+    int best_score;
 } Scores;
 
 Matrix make_matrix(void) {
@@ -19,15 +20,30 @@ Matrix make_matrix(void) {
         mat.matrix[i][i] = 0;
     }
     for (int i = 1; i <= 7; i++) {
-        for (int j = 0; j <= i; j++) {
+        for (int j = 0; j < i; j++) {
             int id = rand() % 3;
-            if (i != j) {
-                mat.matrix[j][i] = fir[id];
-                mat.matrix[i][j] = sec[id];
-            }
+            mat.matrix[j][i] = fir[id];
+            mat.matrix[i][j] = sec[id];
         }
     }
     return mat;
+}
+
+Scores scores_teams(Matrix mat) {
+    Scores sc;
+    int max_score = 0;
+    for (int i = 0; i < 8; i++) {
+        int s = 0;
+        for (int j = 0; j < 8; j++) {
+            s += mat.matrix[i][j];
+        }
+        if (max_score < s) {
+            max_score = s;
+        }
+        sc.array[i] = s;
+    }
+    sc.best_score = max_score;
+    return sc;
 }
 
 void result_matrix(Matrix mat) {
@@ -45,26 +61,11 @@ void result_matrix(Matrix mat) {
     }
 }
 
-Scores scores_teams(Matrix mat) {
-    Scores sc;
-    for (int i = 0; i < 8; i++) {
-        int s = 0;
-        for (int j = 0; j < 8; j++) {
-            s += mat.matrix[i][j];
-        }
-        sc.array[i] = s;
-    }
-    return sc;
-}
-
 void the_best_team(Matrix mat) {
     Scores scores = scores_teams(mat);
-    int max = 0;
+    int max = scores.best_score;
     for (int i = 0; i < 8; i++) {
         printf("Счёт у команды k%d равен: %d\n", i + 1, scores.array[i]);
-        if (max < scores.array[i]) {
-            max = scores.array[i];
-        }
     }
     printf("Максимальное число очков равно: %d\n", max);
     printf("Команды, набравшие максимальное количество очков: ");
@@ -76,7 +77,7 @@ void the_best_team(Matrix mat) {
 }
 
 int main() {
-    srand((unsigned int)time(NULL));
+    srand((unsigned int) time(NULL));
 
     Matrix mat = make_matrix();
     result_matrix(mat);
