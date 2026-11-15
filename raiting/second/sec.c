@@ -1,15 +1,11 @@
 #include <stdio.h>
+#define N 10
 
-void generate_matrix(int matrix[10][10]) {
-    int top = 0, bottom = 9;
-    int left = 0, right = 9;
+void generate_matrix(int matrix[N][N]) {
+    int top = 0, bottom = N - 1;
+    int left = 0, right = N - 1;
     int n = 1;
 
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            matrix[i][j] = 0;
-        }
-    }
     while (top <= bottom && left <= right) {
         for (int j = left; j <= right; j++) {
             matrix[top][j] = n;
@@ -39,22 +35,34 @@ void generate_matrix(int matrix[10][10]) {
     }
 }
 
-void print_matrix(int matrix[10][10]) {
-
-    for (int i = 0; i < 10; i++) {
-        int s = 0;
-        for (int j = 0; j < 10; j++) {
-            s += matrix[i][j];
-            printf("%3d ", matrix[i][j]);
+void sum_lines(int matrix[N][N], int l_sum[N]) {
+    for (int i = 0; i < N; i++) {
+        int sum = 0;
+        for (int j = 0; j < N; j++) {
+            sum += matrix[i][j];
         }
-        printf("Сумма этой строки равна = %d \n", s);
+        l_sum[i] = sum;
     }
 }
 
+void print_matrix(int matrix[N][N], int l_sum[N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%3d ", matrix[i][j]);
+        }
+        printf("Сумма этой строки равна = %d \n", l_sum[i]);
+    }
+}
+
+
 int main() {
-    int matrix[10][10];
+    int matrix[N][N];
+    int l_sum[N];
+
     generate_matrix(matrix);
-    print_matrix(matrix);
+    sum_lines(matrix, l_sum);
+
+    print_matrix(matrix, l_sum);
 
     return 0;
 }
